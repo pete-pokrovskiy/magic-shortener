@@ -7,7 +7,9 @@ using MagicShortener.DataAccess.Mongo;
 using MagicShortener.DataAccess.Repositories;
 using MagicShortener.Logic.Commands;
 using MagicShortener.Logic.Commands.Links.CreateLink;
+using MagicShortener.Logic.Commands.Links.IncrementLinkRedirectsCount;
 using MagicShortener.Logic.Queries;
+using MagicShortener.Logic.Queries.Links.ConvertShortUrlToFull;
 using MagicShortener.Logic.Queries.Links.GetAllLinks;
 using MagicShortener.Logic.Queries.Links.GetLink;
 using MagicShortener.Logic.Services;
@@ -53,10 +55,12 @@ namespace MagicShortener.API
 
             //команды
             services.AddTransient<ICommandHandler<CreateLinkCommand>, CreateLinkCommandHandler>();
+            services.AddTransient<ICommandHandler<IncrementLinkRedirectsCountCommand>, IncrementLinkRedirectsCountCommandHandler>();
 
             //запросы
             services.AddTransient<IQueryHandler<GetLinkQuery, GetLinkQueryResult>, GetLinkQueryHandler>();
             services.AddTransient<IQueryHandler<GetAllLinksQuery, GetAllLinksQueryResult>, GetAllLinksQueryHandler>();
+            services.AddTransient<IQueryHandler<ConvertShortUrlToFullQuery, ConvertShortUrlToFullQueryResult>, ConvertShortUrlToFullQueryHandler>();
 
             //сервисы
             services.AddTransient<IUrlShorteningService, Base62ShorteningService>();

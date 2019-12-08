@@ -48,6 +48,9 @@ namespace MagicShortener.API.Controllers
 
             var result = await _getLinkQueryHandler.ExecuteAsync(new GetLinkQuery { LinkId = id });
 
+            if (result == null)
+                return NotFound();
+
             return Ok(result.Link);
         }
 
