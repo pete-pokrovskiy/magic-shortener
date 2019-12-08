@@ -1,7 +1,6 @@
 ﻿using MagicShortener.DataAccess;
 using MagicShortener.DataAccess.Mongo.Entities;
 using MagicShortener.DataAccess.Repositories;
-using MagicShortener.Logic.Services;
 using System.Threading.Tasks;
 
 namespace MagicShortener.Logic.Commands.Links.CreateLink
@@ -14,27 +13,16 @@ namespace MagicShortener.Logic.Commands.Links.CreateLink
         private readonly ILinksRepository _linksRepository;
         private readonly ICountersRepository _countersRepository;
 
-        private readonly IUrlShorteningService _urlShorteningService;
-
-        public CreateLinkCommandHandler(ILinksRepository linksRepository,
-            ICountersRepository countersRepository, IUrlShorteningService urlShorteningService)
+        public CreateLinkCommandHandler(
+            ILinksRepository linksRepository,
+            ICountersRepository countersRepository)
         {
             _linksRepository = linksRepository;
             _countersRepository = countersRepository;
-            _urlShorteningService = urlShorteningService;
         }
 
         public async Task ExecuteAsync(CreateLinkCommand command)
         {
-
-            //var shortUrl = _urlShorteningService.Shorten(5);
-            //var unshoretenedRecordId = _urlShorteningService.UnShorten(shortUrl);
-
-            //if(id == unshoretenedRecordId)
-            //{
-            //    Debug.WriteLine("Success!");
-            //}
-
             string nextLinkSequentialId = (await _countersRepository.GetNextLinkIdCounterValue()).ToString();
 
             command.Id = nextLinkSequentialId;

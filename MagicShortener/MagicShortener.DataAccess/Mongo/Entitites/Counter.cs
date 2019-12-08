@@ -11,7 +11,7 @@ namespace MagicShortener.DataAccess.Mongo.Entitites
         [BsonId]
         public ObjectId Id { get; set; }
         public string Name { get; set; }
-        public long Value { get; set; }
+        public int Value { get; set; }
 
     }
 }

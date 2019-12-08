@@ -4,6 +4,9 @@ using MagicShortener.API.Inputs;
 using MagicShortener.Common.Helpers;
 using MagicShortener.Logic.Commands;
 using MagicShortener.Logic.Commands.Links.CreateLink;
+using MagicShortener.Logic.Queries;
+using MagicShortener.Logic.Queries.Links.GetAllLinks;
+using MagicShortener.Logic.Queries.Links.GetLink;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MagicShortener.API.Controllers
@@ -14,13 +17,40 @@ namespace MagicShortener.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICommandHandler<CreateLinkCommand> _createLinkCommandHandler;
+        private readonly IQueryHandler<GetLinkQuery, GetLinkQueryResult> _getLinkQueryHandler;
+        private readonly IQueryHandler<GetAllLinksQuery, GetAllLinksQueryResult> _getAllLinksQueryHandler;
 
         public LinksController(IMapper mapper, 
-            ICommandHandler<CreateLinkCommand> createLinkCommandHandler)
+            ICommandHandler<CreateLinkCommand> createLinkCommandHandler,
+
+            IQueryHandler<GetLinkQuery, GetLinkQueryResult> getLinkQueryHandler,
+            IQueryHandler<GetAllLinksQuery, GetAllLinksQueryResult> getAllLinksQueryHandler)
         {
             _mapper = mapper;
             _createLinkCommandHandler = createLinkCommandHandler;
+            _getLinkQueryHandler = getLinkQueryHandler;
+            _getAllLinksQueryHandler = getAllLinksQueryHandler;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _getAllLinksQueryHandler.ExecuteAsync(new GetAllLinksQuery());
+            return Ok(result.Links);
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return BadRequest(Constants.NoIdError);
+
+            var result = await _getLinkQueryHandler.ExecuteAsync(new GetLinkQuery { LinkId = id });
+
+            return Ok(result.Link);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateLinkRequest request)
@@ -40,16 +70,10 @@ namespace MagicShortener.API.Controllers
             //маппинг в команду
             var createCommand = _mapper.Map<CreateLinkCommand>(request);
 
-            await _createLinkCommandHandler.ExecuteAsync(_mapper.Map<CreateLinkCommand>(request));
+            await _createLinkCommandHandler.ExecuteAsync(createCommand);
 
             return Created(GetEntityUri(createCommand.Id), createCommand.Id);
 
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
-        {
-            return Ok();
         }
 
         // TODO: DELETE: /api/links/{linkId}
@@ -65,6 +89,7 @@ namespace MagicShortener.API.Controllers
         private class Constants
         {
             public const string UnreachableUrlError = "Url не существует или недоступен!";
+            public const string NoIdError = "Не передан идентификатор ссылки!";
         }
 
 
