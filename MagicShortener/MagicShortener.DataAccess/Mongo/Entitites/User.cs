@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MagicShortener.DataAccess.Mongo.Entitites;
 
 namespace MagicShortener.DataAccess.Mongo.Entities
 {
@@ -8,8 +7,6 @@ namespace MagicShortener.DataAccess.Mongo.Entities
     /// </summary>
     public class User
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
         public byte[] Password { get; set; }
