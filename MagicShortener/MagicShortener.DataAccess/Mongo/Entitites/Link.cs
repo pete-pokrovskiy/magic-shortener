@@ -17,5 +17,9 @@ namespace MagicShortener.DataAccess.Mongo.Entities
         public DateTime? LastTimeRedirected { get; set; }
         public int RedirectsCount { get; set; }
         public User User { get; set; }
+        /// <summary>
+        /// Идентификатор привязки ссылок к незарегистрированным пользователям
+        /// </summary>
+        public string TempTokenId { get; set; }
     }
 }

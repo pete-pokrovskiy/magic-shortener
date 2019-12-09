@@ -1,6 +1,7 @@
 ﻿using MagicShortener.DataAccess;
 using MagicShortener.DataAccess.Mongo.Entities;
 using MagicShortener.DataAccess.Repositories;
+using MagicShortener.Logic.Services.Authentication;
 using System.Threading.Tasks;
 
 namespace MagicShortener.Logic.Commands.Links.CreateLink
@@ -15,7 +16,9 @@ namespace MagicShortener.Logic.Commands.Links.CreateLink
 
         public CreateLinkCommandHandler(
             ILinksRepository linksRepository,
-            ICountersRepository countersRepository)
+            ICountersRepository countersRepository
+            //ICurrentUserDataService currentUserDataService
+            )
         {
             _linksRepository = linksRepository;
             _countersRepository = countersRepository;
@@ -31,6 +34,7 @@ namespace MagicShortener.Logic.Commands.Links.CreateLink
             {
                 Id = command.Id,
                 FullLink = command.FullLink,
+                // TODO: из currentUserDataService достаем идентификатор текущего пользователя
             });
         }
     }

@@ -80,7 +80,7 @@ namespace MagicShortener.API
             //запросы
             services.AddTransient<IQueryHandler<GetLinkQuery, GetLinkQueryResult>, GetLinkQueryHandler>();
             services.AddTransient<IQueryHandler<GetAllLinksQuery, GetAllLinksQueryResult>, GetAllLinksQueryHandler>();
-            services.AddTransient<IQueryHandler<ConvertShortUrlToFullQuery, ConvertShortUrlToFullQueryResult>, ConvertShortUrlToFullQueryHandler>();
+            services.AddTransient<IQueryHandler<GetShortUrlQuery, GetShortUrlQueryResult>, GetShortUrlQueryHandler>();
 
             //сервисы
             services.AddTransient<IUrlShorteningService, Base62ShorteningService>();

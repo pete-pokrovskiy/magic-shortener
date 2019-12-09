@@ -19,6 +19,8 @@ namespace MagicShortener.Logic.Queries.Links.GetLink
         }
         public async Task<GetLinkQueryResult> ExecuteAsync(GetLinkQuery query)
         {
+            // TODO: проверка прав доступа к текущей ссылке
+
             var link = await _linksRepository.Get(query.LinkId);
 
             if (link == null)

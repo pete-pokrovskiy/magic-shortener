@@ -13,7 +13,9 @@ using System.Threading.Tasks;
 
 namespace MagicShortener.API.Controllers
 {
+
     [Route("auth")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IUsersRepository _usersRepository;

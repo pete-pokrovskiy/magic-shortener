@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace MagicShortener.Logic.Queries.Links.ConvertShortUrlToFull
 {
-    public class ConvertShortUrlToFullQuery : IQuery
+    public class GetShortUrlQueryResult : IQueryResult
     {
-        public string ShortUrl { get; set; }
+        public string LinkId { get; set; }
+        public string FullUrl { get; set; }
     }
 }
