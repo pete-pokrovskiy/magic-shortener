@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "fae3d58a-090e-4e20-84a9-641fffecc20d",
+		"name": "MagicShortener",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Links",
+			"item": [
+				{
+					"name": "GetAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:49458/api/links",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "49458",
+							"path": [
+								"api",
+								"links"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"url\": \"https://www.techspot.com/community/topics/how-to-install-windows-7-on-a-netbook-using-a-usb-flash-drive.183072/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:49458/api/links",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "49458",
+							"path": [
+								"api",
+								"links"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:49458/api/links/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "49458",
+							"path": [
+								"api",
+								"links",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Redirect",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:49458/r/j",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "49458",
+							"path": [
+								"r",
+								"j"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Auth",
+			"item": [],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
