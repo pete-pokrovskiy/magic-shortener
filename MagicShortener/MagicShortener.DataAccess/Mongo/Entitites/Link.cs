@@ -16,5 +16,6 @@ namespace MagicShortener.DataAccess.Mongo.Entities
         //public string ShortLink { get; set; }
         public DateTime? LastTimeRedirected { get; set; }
         public int RedirectsCount { get; set; }
+        public User User { get; set; }
     }
 }

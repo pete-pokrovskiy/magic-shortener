@@ -15,6 +15,7 @@ namespace MagicShortener.Logic.Commands.Links.IncrementLinkRedirectsCount
 
         public async Task ExecuteAsync(IncrementLinkRedirectsCountCommand command)
         {
+            // TODO: для корректного ведения количества переходов здесь нужна синхронизация, аналогиная использованной в CountersRepository
             var link = await _linksRepository.Get(command.LinkId);
 
             // TODO: вынести проверку в валидационый декоратор

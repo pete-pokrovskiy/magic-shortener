@@ -18,4 +18,8 @@
     <ProjectReference Include="..\MagicShortener.Logic\MagicShortener.Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Authentication\" />
+  </ItemGroup>
+
 </Project>

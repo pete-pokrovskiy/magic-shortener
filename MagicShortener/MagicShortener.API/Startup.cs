@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation.AspNetCore;
 using MagicShortener.API.Infrastructure;
+using MagicShortener.API.Infrastructure.Authentication;
 using MagicShortener.Common.Configuration;
 using MagicShortener.DataAccess;
 using MagicShortener.DataAccess.Mongo;
@@ -24,6 +25,7 @@ namespace MagicShortener.API
 {
     public class Startup
     {
+        private const string AllowAllPolicyName = "AllowAllPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,6 +36,23 @@ namespace MagicShortener.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+
+            //считаем, что на API - публичный. В противном случае надо выставить соответствующие опции
+            services.AddCors(options => {
+                options.AddPolicy(AllowAllPolicyName,
+                        builder => builder.AllowAnyOrigin()
+                                          .AllowAnyMethod()
+                                          .AllowAnyHeader()
+                                          .AllowCredentials());
+            });
+
+
+            // TODO: здесь весь bootstrap код для конфигурации аутентификации/авторизации
+            // AddAuthentication с типом JwtBearerDefaults.AuthenticationScheme
+            // синглтон для создания фабрики генерации токенов
+            // получение настроек из конфига, создание ключа для подписи
+            // формирование перечня TokenValidationParameters - время жизни и т д
+            
 
             services.AddMvc()
                 .AddJsonOptions(opt =>
@@ -52,6 +71,7 @@ namespace MagicShortener.API
             //репозитории
             services.AddTransient<ILinksRepository, LinksRepository>();
             services.AddTransient<ICountersRepository, CountersRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
 
             //команды
             services.AddTransient<ICommandHandler<CreateLinkCommand>, CreateLinkCommandHandler>();
@@ -78,14 +98,10 @@ namespace MagicShortener.API
                 app.UseHsts();
             }
 
-            //считаем, что на API - публичный. В противном случае надо выставить соответствующие опции
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin();
-            });
-
             //для необработанных исключений регистрируем глобальный обработчик в пайплайне
             app.ConfigureExceptionHandler();
+
+            app.UseCors(AllowAllPolicyName);
 
             app.UseHttpsRedirection();
             app.UseMvc();
